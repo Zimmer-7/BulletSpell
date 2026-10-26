@@ -1,0 +1,56 @@
+# =========================================================================
+# Unity
+# =========================================================================
+[L|l]ibrary/
+[T|t]emp/
+[O|o]bj/
+[B|b]uild/
+[B|b]uilds/
+[L|l]ogs/
+[U|u]ser[S|s]ettings/
+[M|m]emoryCaptures/
+
+# Asset store packages and package manager cache
+/[A|a]ssets/AssetStoreTools*
+/[A|a]ssets/Plugins/GitHub/
+
+# Visual Studio / VS Code / Rider cache
+.vs/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.opendb
+*.VC.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+ehthumbs.db
+Thumbs.db
+[T|t]humbs.db
+
+# Crash reports
+sysinfo.txt
+
+# Builds
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Auto-generated project files by Unity
+ExportedObj/
+.utmp/
+
+# Unity WebGL / Addressables build output
+[A|a]ssets/[A|a]ddressable[A|a]sset[D|d]ata/*/*.bin*
+/[A|a]ssets/[S|s]reaming[A|a]ssets/aa/*
