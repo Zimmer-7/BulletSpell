@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     public Projectile projetilPrefab;
     public Transform pontoDeTiro;
     public float intervaloEntreTiros = 0.2f;
-
+    public Animator animator;
     private Camera cam;
     private float proximoTiro;
 
@@ -37,7 +37,9 @@ public class PlayerController : MonoBehaviour
     {
         olharParaMouse();
 
-        if (fireAction.action.IsPressed() && Time.time >= proximoTiro)
+        bool atirando = fireAction.action.IsPressed();
+        animator.SetBool("isShooting", atirando);
+        if (atirando && Time.time >= proximoTiro)
         {
             atirar();
             proximoTiro = Time.time + intervaloEntreTiros;
@@ -52,6 +54,7 @@ public class PlayerController : MonoBehaviour
     private void movePlayer()
     {
         Vector2 input = moveAction.action.ReadValue<Vector2>();
+        animator.SetBool("isMoving", input.sqrMagnitude > 0.01f);
         Vector3 frente = Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up);
 
         if (frente.sqrMagnitude < 0.01f) 
@@ -75,6 +78,7 @@ public class PlayerController : MonoBehaviour
     private void atirar()
     {
         Vector3 origem = pontoDeTiro != null ? pontoDeTiro.position : transform.position;
+        
         Vector3 direcao = direcaoDoMouse(origem);
         if (direcao == Vector3.zero) return;
 
