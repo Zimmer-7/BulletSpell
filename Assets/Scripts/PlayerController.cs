@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     public InputActionReference moveAction;
     public InputActionReference fireAction;
     public float velocidade = 5f;
+    public float velocidadeDeRotacao = 0f;
 
     [Header("Tiro")]
     public Projectile projetilPrefab;
@@ -34,6 +35,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        olharParaMouse();
+
         if (fireAction.action.IsPressed() && Time.time >= proximoTiro)
         {
             atirar();
@@ -49,8 +52,24 @@ public class PlayerController : MonoBehaviour
     private void movePlayer()
     {
         Vector2 input = moveAction.action.ReadValue<Vector2>();
-        Vector3 move = new Vector3(input.x, 0, input.y);
-        transform.Translate(move * Time.deltaTime * velocidade);
+        Vector3 frente = Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up);
+
+        if (frente.sqrMagnitude < 0.01f) 
+            frente = Vector3.ProjectOnPlane(cam.transform.up, Vector3.up);
+        
+        frente.Normalize();
+        Vector3 direita = Vector3.ProjectOnPlane(cam.transform.right, Vector3.up).normalized;
+        Vector3 move = direita * input.x + frente * input.y;
+        transform.Translate(move * Time.deltaTime * velocidade, Space.World);
+    }
+
+    private void olharParaMouse()
+    {
+        Vector3 direcao = direcaoDoMouse(transform.position);
+        if (direcao == Vector3.zero) return;
+
+        Quaternion alvo = Quaternion.LookRotation(direcao);
+        transform.rotation = alvo;
     }
 
     private void atirar()
