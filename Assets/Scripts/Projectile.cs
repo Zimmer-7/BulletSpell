@@ -28,7 +28,7 @@ public class Projectile : MonoBehaviour
     {
         if (other.gameObject == dono || other.GetComponent<Projectile>() != null) return;
 
-        // other.GetComponent<Vida>()?.ReceberDano(dano);
+        if (other.TryGetComponent(out Enemy inimigo)) inimigo.ReceberDano(dano);
 
         Destroy(gameObject);
     }
