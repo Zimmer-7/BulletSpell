@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public InputActionReference fireAction;
     public float velocidade = 5f;
     public float velocidadeDeRotacao = 0f;
+    public float vida = 5;
 
     [Header("Tiro")]
     public Projectile projetilPrefab;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     private Camera cam;
     private float proximoTiro;
+    public int dano = 1;
 
     void OnEnable()
     {
@@ -35,6 +37,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (vida <= 0)
+        {
+            //morre
+            Debug.Log("morri");
+            animator.SetBool("isDead", true);
+            return;
+        }
+
         olharParaMouse();
 
         bool atirando = fireAction.action.IsPressed();
@@ -83,7 +93,7 @@ public class PlayerController : MonoBehaviour
         if (direcao == Vector3.zero) return;
 
         Projectile projetil = Instantiate(projetilPrefab, origem, Quaternion.LookRotation(direcao));
-        projetil.Disparar(direcao, gameObject);
+        projetil.Disparar(direcao, gameObject, dano);
     }
 
     private Vector3 direcaoDoMouse(Vector3 origem)
@@ -95,6 +105,17 @@ public class PlayerController : MonoBehaviour
         Vector3 direcao = raio.GetPoint(distancia) - origem;
         direcao.y = 0;
         return direcao.normalized;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Enemy en = collision.gameObject.GetComponent<Enemy>();
+
+            vida -= en.dano;
+            Debug.Log("tomei dano");
+        }
     }
 }
 

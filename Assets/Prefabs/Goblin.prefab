@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 214610306186291779}
   m_Layer: 0
   m_Name: Goblin
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,7 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   velocidade: 3
-  vidaMaxima: 1
+  vidaMaxima: 2
+  dano: 1
   ajusteDeRotacao: 0
   spawner: {fileID: 0}
   indiceNaLista: 0

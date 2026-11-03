@@ -4,6 +4,7 @@ public class Enemy : MonoBehaviour
 {
     public float velocidade = 3f;
     public int vidaMaxima = 1;
+    public float dano = 1;
 
     public float ajusteDeRotacao = 0f;
  

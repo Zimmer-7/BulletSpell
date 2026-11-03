@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour
 {
     public float velocidade = 15f;
     public float tempoDeVida = 3f;
-    public int dano = 1;
+    private int danoTiro;
 
     private Rigidbody rb;
     private GameObject dono;
@@ -17,9 +17,10 @@ public class Projectile : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
     }
 
-    public void Disparar(Vector3 direcao, GameObject atirador)
+    public void Disparar(Vector3 direcao, GameObject atirador, int dano)
     {
         dono = atirador;
+        danoTiro = dano;
         rb.linearVelocity = direcao * velocidade;
         Destroy(gameObject, tempoDeVida);
     }
@@ -28,7 +29,7 @@ public class Projectile : MonoBehaviour
     {
         if (other.gameObject == dono || other.GetComponent<Projectile>() != null) return;
 
-        if (other.TryGetComponent(out Enemy inimigo)) inimigo.ReceberDano(dano);
+        if (other.TryGetComponent(out Enemy inimigo)) inimigo.ReceberDano(danoTiro);
 
         Destroy(gameObject);
     }
