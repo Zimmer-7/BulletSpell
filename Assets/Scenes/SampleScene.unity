@@ -427,7 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07815d30455f8404a804d29bdc017d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  inimigoPrefab: {fileID: 2729433666203048752, guid: 69753d64a79378545b784724a6f3a53c, type: 3}
+  inimigoPrefab: {fileID: 1657407803224815012, guid: bab6d4e7da9f1924ebb431512ab4d954, type: 3}
   player: {fileID: 1446371519}
   inimigosPorSegundo: 1
   maximoDeInimigos: 200
