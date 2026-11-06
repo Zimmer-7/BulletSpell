@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Enemy inimigoPrefab;
+    public EnemyDatabase inimigos;
     public Transform player;
  
     [Header("Spawn")]
@@ -27,7 +27,8 @@ public class EnemySpawner : MonoBehaviour
  
         for (int i = 0; i < maximoDeInimigos; i++)
         {
-            Enemy e = Instantiate(inimigoPrefab, transform);
+            int index = Random.Range(0, inimigos.enemies.Count);
+            Enemy e = Instantiate(inimigos.GetEnemyByIndex(index), transform);
             e.spawner = this;
             e.gameObject.SetActive(false);
             pool.Push(e);
@@ -97,7 +98,7 @@ public class EnemySpawner : MonoBehaviour
         }
  
         Ray raio = cam.ViewportPointToRay(vp);
-        Plane chao = new Plane(Vector3.up, player.position);
+        Plane chao = new Plane(Vector3.up, new Vector3(0f, 0f, 0f));
         if (chao.Raycast(raio, out float distancia))
         {
             posicao = raio.GetPoint(distancia);

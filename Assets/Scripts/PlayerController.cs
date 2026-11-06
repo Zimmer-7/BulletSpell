@@ -5,9 +5,11 @@ public class PlayerController : MonoBehaviour
 {
     public InputActionReference moveAction;
     public InputActionReference fireAction;
+    public InputActionReference pauseAction;
     public float velocidade = 5f;
     public float velocidadeDeRotacao = 0f;
     public float vida = 5;
+    public int ammo = 10;
 
     [Header("Tiro")]
     public Projectile projetilPrefab;
@@ -22,12 +24,14 @@ public class PlayerController : MonoBehaviour
     {
         moveAction.action.Enable();
         fireAction.action.Enable();
+        pauseAction.action.Enable();
     }
 
     void OnDisable()
     {
         moveAction.action.Disable();
         fireAction.action.Disable();
+        pauseAction.action.Disable();
     }
 
     void Start()
@@ -39,8 +43,7 @@ public class PlayerController : MonoBehaviour
     {
         if (vida <= 0)
         {
-            //morre
-            Debug.Log("morri");
+            GameManager.Instance.LoseGame();
             animator.SetBool("isDead", true);
             return;
         }
@@ -54,6 +57,8 @@ public class PlayerController : MonoBehaviour
             atirar();
             proximoTiro = Time.time + intervaloEntreTiros;
         }
+
+        pauseGame();
     }
 
     void FixedUpdate()
@@ -74,6 +79,14 @@ public class PlayerController : MonoBehaviour
         Vector3 direita = Vector3.ProjectOnPlane(cam.transform.right, Vector3.up).normalized;
         Vector3 move = direita * input.x + frente * input.y;
         transform.Translate(move * Time.deltaTime * velocidade, Space.World);
+    }
+
+    private void pauseGame()
+    {
+        if (pauseAction.action.triggered)
+        {
+            GameManager.Instance.PauseGame();
+        }
     }
 
     private void olharParaMouse()
